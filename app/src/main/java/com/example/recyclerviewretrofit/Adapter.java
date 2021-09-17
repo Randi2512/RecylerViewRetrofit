@@ -8,16 +8,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
-    private List<Contact> newlist;
-    private Context context;
+    private ArrayList<Result> arrayList;
 
-    public Adapter(List<Contact> newlist, Context context) {
-        this.newlist = newlist;
-        this.context = context;
+    public Adapter(ArrayList<Result> marrayList){
+        arrayList = marrayList;
     }
 
     @Override
@@ -30,13 +29,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         // Get position of MyViewHolder class
-        holder.name.setText(newlist.get(position).getName());
-        holder.email.setText(newlist.get(position).getEmail());
+        holder.name.setText(arrayList.get(position).getNama());
+        holder.email.setText(arrayList.get(position).getEmail());
     }
 
     @Override
     public int getItemCount() {
-        return newlist.size();
+        return arrayList.size();
     }
 
     // This ViewHolder of RecycleView
@@ -49,5 +48,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             name = itemView.findViewById(R.id.name);
             email = itemView.findViewById(R.id.email);
         }
+    }
+
+    public void setData(ArrayList<Result> newlist) {
+        this.arrayList = newlist;
     }
 }
