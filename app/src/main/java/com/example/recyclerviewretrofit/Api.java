@@ -9,8 +9,5 @@ import retrofit2.http.Query;
 public interface Api {
 
     @GET("getData.php")
-    Call<List<Contact>> getContact(
-            @Query("item_type") String item_type,
-            @Query("key") String keyword
-    );
+    Call<Contact> getContact();
 }

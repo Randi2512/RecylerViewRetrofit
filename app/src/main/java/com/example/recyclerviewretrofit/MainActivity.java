@@ -5,11 +5,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private List<Contact> newlist;
     private Adapter adapter;
     private Api apiInterface;
     ProgressBar progressBar;
@@ -42,23 +42,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void fetchData(String type, String key){
 
+        adapter = new Adapter(new ArrayList());
         apiInterface = ApiClient.getApiClient().create(Api.class);
 
-        Call<List<Contact>> call = apiInterface.getContact(type, key);
-        call.enqueue(new Callback<List<Contact>>() {
+        Call<Contact> call = apiInterface.getContact();
+        call.enqueue(new Callback<Contact>() {
             @Override
-            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+            public void onResponse(Call<Contact> call, Response<Contact> response) {
                 Log.d("respons:", String.valueOf(response.body()));
                 progressBar.setVisibility(View.GONE);
-                newlist = response.body();
-                adapter = new Adapter(newlist, MainActivity.this);
+                adapter.setData(response.body().result);
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {
+            public void onFailure(Call<Contact> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
+                Log.d("response::", t.toString());
                 Toast.makeText(MainActivity.this, "Error\n"+t.toString(), Toast.LENGTH_LONG).show();
             }
         });

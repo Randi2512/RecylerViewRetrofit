@@ -2,21 +2,40 @@ package com.example.recyclerviewretrofit;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Contact {
+import java.util.ArrayList;
 
-    @SerializedName("id") private int Id;
-    @SerializedName("name") private String Name;
-    @SerializedName("email") private String Email;
 
-    public int getId() {
-        return Id;
+public class Contact{
+    public ArrayList<Result> result;
+}
+
+class Result{
+    public String id;
+    public String nama;
+    public String email;
+
+    public String getId() {
+        return id;
     }
 
-    public String getName() {
-        return Name;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
+
